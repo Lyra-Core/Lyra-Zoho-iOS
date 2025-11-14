@@ -1,9 +1,9 @@
 public final class ExceptionEvent {
-    var excption: String
+    var exception: String
     var exceptionLocation: ExceptionLocation
 
     init(exception: String, exceptionLocation: ExceptionLocation) {
-        self.excption = exception
+        self.exception = exception
         self.exceptionLocation = exceptionLocation
     }
 }

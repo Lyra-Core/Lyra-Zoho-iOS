@@ -1,5 +1,5 @@
 enum NotificationError: Error {
-    case unknowNotificationError
+    case unknownNotificationError
     case actionIdentifierNotProvided
     case userInfoNotProvided
 }
@@ -7,7 +7,7 @@ enum NotificationError: Error {
 extension NotificationError : CustomStringConvertible {
     public var description: String {
         switch self {
-            case .unknowNotificationError:
+            case .unknownNotificationError:
                 return "Unknown Notification Error"
         case .actionIdentifierNotProvided:
             return "Action Identifier Not Provided"

@@ -9,9 +9,10 @@ final class ChatClient: Sendable {
     private var chatListener: Optional<ZohoChatListener> = nil
     private var isListenersStarted = false
     private var languageCode = "en"
+    private var title = ""
     
     
-    func startLissteners(listener: Optional<ZohoChatListener>) throws(InitializationError) {
+    func startListeners(listener: Optional<ZohoChatListener>) throws(InitializationError) {
         do throws (InitializationError) {
             let isSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isInitialized() })
             if !isSDKInitialized {
@@ -141,6 +142,9 @@ final class ChatClient: Sendable {
                 ZohoSalesIQ.Chat.setLanguageWithCode(languageCode)
                 self.languageCode = languageCode
             }
+            
+            try self.setQuestion()
+            try self.setPageTitle(title: title)
         } catch InitializationError.sdkUninitialized {
             throw .sdkUninitialized
         } catch {
@@ -193,7 +197,7 @@ final class ChatClient: Sendable {
             if !isZohoSDKInitialized {
                 throw .zohoSDKUninitialized
             }
-            
+            self.title = title
             ZohoSalesIQ.Tracking.setPageTitle(title)
         } catch InitializationError.sdkUninitialized {
             throw .sdkUninitialized

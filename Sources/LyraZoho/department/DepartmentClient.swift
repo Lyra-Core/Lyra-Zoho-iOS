@@ -45,8 +45,8 @@ final class DepartmentClient {
     
     func getDefaultDepartment() -> Department? {
         do throws(InitializationError) {
-            let isSKDInitialized = CoreInitializer.shared.withLock({ core in return core.isInitialized() })
-            if !isSKDInitialized {
+            let isSDKInitialized = CoreInitializer.shared.withLock({ core in return core.isInitialized() })
+            if !isSDKInitialized {
                 throw .sdkUninitialized
             }
             let fileUtils = FileUtils.shared.withLock({ fileUtils in return fileUtils })

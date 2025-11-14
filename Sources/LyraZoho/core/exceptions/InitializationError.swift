@@ -3,6 +3,7 @@ public enum InitializationError: Error {
     case noErrorMessage(Int)
     case sdkUninitialized
     case zohoSDKUninitialized
+    case unknownNotificationError
 }
 
 extension InitializationError: CustomStringConvertible {
@@ -16,6 +17,8 @@ extension InitializationError: CustomStringConvertible {
                 return "LyraZoho SDK has not been initialized"
             case .zohoSDKUninitialized:
                 return "Zoho SDK has not been initialized"
+            case .unknownNotificationError:
+                return "Unknown notification error"
         }
     }
 }
