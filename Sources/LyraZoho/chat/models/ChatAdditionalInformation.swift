@@ -1,8 +1,8 @@
 import Foundation
 
-public final class ChatAdditionalInformation: NSObject {
-    var companyName: String
-    var primaryNeed: String
+public final class ChatAdditionalInformation: NSObject, Codable {
+    public var companyName: String
+    public var primaryNeed: String
     
     public init(companyName: String, primaryNeed: String) {
         self.companyName = companyName
