@@ -1,7 +1,7 @@
 import Foundation
 
 public final class Department: NSObject, Codable {
-    var name: String
-    var codes: [String]
-    var `default`: Bool   
+    public var name: String
+    public var codes: [String]
+    public var `default`: Bool   
 }

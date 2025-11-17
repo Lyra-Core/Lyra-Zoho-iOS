@@ -45,7 +45,7 @@ public final class LyraZoho: Sendable {
         try chatClient.startListeners(listener: listener)
     }
 
-    public func openChat(listener: ZohoChatListener?) throws(InitializationError) {
+    public func openChat() throws(InitializationError) {
         let chatClient = ChatClient.shared.withLock({ chat in return chat })
         try chatClient.open()
     }
@@ -80,6 +80,11 @@ public final class LyraZoho: Sendable {
     public func endChatSession() {
         let chatClient = ChatClient.shared.withLock({ chat in return chat })
         chatClient.endSession()
+    }
+    
+    public func showZohoLauncher() {
+        let chatClient = ChatClient.shared.withLock({ chat in return chat })
+        chatClient.showZohoLauncher()
     }
 
     // Notification Functionality

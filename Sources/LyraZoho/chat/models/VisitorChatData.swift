@@ -1,19 +1,19 @@
 import Foundation
 
 public final class VisitorChatData: NSObject {
-    var chatId: String
-    var question: Optional<String>
-    var attenderName: Optional<String>
-    var attenderEmail: Optional<String>
-    var attenderId: Optional<String>
-    var isBotAttender: Bool
-    var departmentName: Optional<String>
-    var chatStatus: Optional<String>
-    var unreadCount: Int
-    var feedback: Optional<String>
-    var rating: Optional<String>
-    var lastMessage: Optional<String>
-    var queuePosition: Int
+    public var chatId: String
+    public var question: Optional<String>
+    public var attenderName: Optional<String>
+    public var attenderEmail: Optional<String>
+    public var attenderId: Optional<String>
+    public var isBotAttender: Bool
+    public var departmentName: Optional<String>
+    public var chatStatus: Optional<String>
+    public var unreadCount: Int
+    public var feedback: Optional<String>
+    public var rating: Optional<String>
+    public var lastMessage: Optional<String>
+    public var queuePosition: Int
     
     init(chatId: String, question: Optional<String>, attenderName: Optional<String>, attenderEmail: Optional<String>, attenderId: Optional<String>, isBotAttender: Bool, departmentName: Optional<String>, chatStatus: Optional<String>, unreadCount: Int, feedback: Optional<String>, rating: Optional<String>, lastMessage: Optional<String>, queuePosition: Int) {
         self.chatId = chatId

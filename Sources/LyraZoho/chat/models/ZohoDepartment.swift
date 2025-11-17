@@ -1,9 +1,9 @@
 import Foundation
 
 public final class ZohoDepartment: NSObject {
-    var id: String
-    var name: String
-    var available: Bool
+    public var id: String
+    public var name: String
+    public var available: Bool
     
     init(id: String, name: String, available: Bool) {
         self.id = id
