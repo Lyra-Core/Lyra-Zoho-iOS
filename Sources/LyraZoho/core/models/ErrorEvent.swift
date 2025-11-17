@@ -1,4 +1,6 @@
-public final class ErrorEvent {
+import Foundation
+
+public final class ErrorEvent: NSObject {
     public var errorCode: Int
     public var errorMessage: String
     public var errorLocation: ErrorLocation

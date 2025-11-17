@@ -1,4 +1,6 @@
-public final class ChatEvent {
+import Foundation
+
+public final class ChatEvent : NSObject {
     public var type: ChatEventType
     public var chatId: Optional<String>
     public var visitorChat: Optional<VisitorChatData>

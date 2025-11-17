@@ -1,5 +1,6 @@
+import Foundation
 
-public final class VisitorChatData {
+public final class VisitorChatData: NSObject {
     var chatId: String
     var question: Optional<String>
     var attenderName: Optional<String>

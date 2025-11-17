@@ -1,4 +1,5 @@
-public final class ExceptionEvent {
+import Foundation
+public final class ExceptionEvent: NSObject {
     var exception: String
     var exceptionLocation: ExceptionLocation
 

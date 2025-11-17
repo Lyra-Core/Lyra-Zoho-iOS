@@ -1,5 +1,6 @@
+import Foundation
 
-public final class ChatAdditionalInformation{
+public final class ChatAdditionalInformation: NSObject {
     var companyName: String
     var primaryNeed: String
     

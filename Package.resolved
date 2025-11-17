@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/zoho/SalesIQ-Mobilisten-iOS-SP.git",
       "state" : {
-        "revision" : "1a620f538abf828a51a81d42812f2d77a49c2b1f",
-        "version" : "10.1.6"
+        "revision" : "875b6a4c3d8711806a249cc85b3f02831b9c541a",
+        "version" : "10.2.0"
       }
     }
   ],

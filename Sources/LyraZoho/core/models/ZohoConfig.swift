@@ -1,4 +1,6 @@
-public final class ZohoConfig {
+import Foundation
+
+public final class ZohoConfig: NSObject {
     var appKey: String
     var accessKey: String
     var exceptionHandlingCallback: ExceptionHandlingCallback

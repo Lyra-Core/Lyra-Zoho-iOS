@@ -1,5 +1,6 @@
+import Foundation
 
-public final class ZohoDepartment {
+public final class ZohoDepartment: NSObject {
     var id: String
     var name: String
     var available: Bool
