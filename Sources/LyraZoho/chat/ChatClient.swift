@@ -4,7 +4,7 @@ import Foundation
 
 @MainActor
 final class ChatClient: Sendable {
-    static let shared = Mutex<ChatClient>(ChatClient())
+    static let shared = ChatClient()
     
     private var chatListener: Optional<ZohoChatListener> = nil
     private var isListenersStarted = false
@@ -14,12 +14,8 @@ final class ChatClient: Sendable {
     
     func startListeners(listener: Optional<ZohoChatListener>) throws(InitializationError) {
         do throws (InitializationError) {
-            let isSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isInitialized() })
-            if !isSDKInitialized {
-                throw .sdkUninitialized
-            }
             
-            let isZohoSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isZohoInitialized() })
+            let isZohoSDKInitialized = CoreInitializer.shared.isZohoInitialized()
             if !isZohoSDKInitialized {
                 throw .zohoSDKUninitialized
             }
@@ -32,7 +28,7 @@ final class ChatClient: Sendable {
                 })
             } catch {
                 
-                guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else { return }
+                guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else { return }
                 
                 exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.CHAT_START_LISTENERS))
             }
@@ -40,7 +36,7 @@ final class ChatClient: Sendable {
             throw .sdkUninitialized
         } catch {
             
-            guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else { return }
+            guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else { return }
             
             exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.CHAT_START_LISTENERS))
         }
@@ -48,12 +44,7 @@ final class ChatClient: Sendable {
     
     func open() throws (InitializationError) {
         do throws (InitializationError) {
-            let isSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isInitialized() })
-            if !isSDKInitialized {
-                throw .sdkUninitialized
-            }
-            
-            let isZohoSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isZohoInitialized() })
+            let isZohoSDKInitialized = CoreInitializer.shared.isZohoInitialized()
             if !isZohoSDKInitialized {
                 throw .zohoSDKUninitialized
             }
@@ -62,7 +53,7 @@ final class ChatClient: Sendable {
                 ZohoSalesIQ.Chat.show();
             } catch {
                 
-                guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else { return }
+                guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else { return }
                 
                 exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.CHAT_START_LISTENERS))
             }
@@ -70,7 +61,7 @@ final class ChatClient: Sendable {
             throw .sdkUninitialized
         } catch {
             
-            guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else { return }
+            guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else { return }
             
             exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.CHAT_START_LISTENERS))
         }
@@ -78,21 +69,16 @@ final class ChatClient: Sendable {
     
     func setDepartment(countryCode: String) throws (InitializationError) {
         do throws (InitializationError) {
-            let isSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isInitialized() })
-            if !isSDKInitialized {
-                throw .sdkUninitialized
-            }
-            
-            let isZohoSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isZohoInitialized() })
+            let isZohoSDKInitialized = CoreInitializer.shared.isZohoInitialized()
             if !isZohoSDKInitialized {
                 throw .zohoSDKUninitialized
             }
             
             do throws (DepartmentError) {
-                var department = DepartmentClient.shared.withLock({ core in  return core.getDepartmentsByCountry(countryCode: countryCode, )})
+                var department = DepartmentClient.shared.getDepartmentsByCountry(countryCode: countryCode, )
                 
                 if (department == nil) {
-                    department = DepartmentClient.shared.withLock({ core in  return core.getDefaultDepartment()})
+                    department = DepartmentClient.shared.getDefaultDepartment()
                     
                     if (department == nil) {
                         throw .notFound
@@ -103,7 +89,7 @@ final class ChatClient: Sendable {
                 
                 ZohoSalesIQ.Chat.setDepartment(departmentName)
             } catch {
-                guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else { return }
+                guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else { return }
                 
                 exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.CHAT_SET_DEPARTMENT))
             }
@@ -111,7 +97,7 @@ final class ChatClient: Sendable {
             throw .sdkUninitialized
         } catch {
             
-            guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else { return }
+            guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else { return }
             
             exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.CHAT_SET_DEPARTMENT))
         }
@@ -119,12 +105,7 @@ final class ChatClient: Sendable {
     
     func setLanguage(languageCode: String) throws (InitializationError) {
         do throws (InitializationError) {
-            let isSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isInitialized() })
-            if !isSDKInitialized {
-                throw .sdkUninitialized
-            }
-            
-            let isZohoSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isZohoInitialized() })
+            let isZohoSDKInitialized = CoreInitializer.shared.isZohoInitialized()
             if !isZohoSDKInitialized {
                 throw .zohoSDKUninitialized
             }
@@ -149,7 +130,7 @@ final class ChatClient: Sendable {
             throw .sdkUninitialized
         } catch {
             
-            guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else { return }
+            guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else { return }
             
             exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.CHAT_SET_DEPARTMENT))
         }
@@ -157,12 +138,7 @@ final class ChatClient: Sendable {
     
     func setAdditionalInformation(additionalInfo: ChatAdditionalInformation) throws (InitializationError) {
         do throws (InitializationError) {
-            let isSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isInitialized() })
-            if !isSDKInitialized {
-                throw .sdkUninitialized
-            }
-            
-            let isZohoSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isZohoInitialized() })
+            let isZohoSDKInitialized = CoreInitializer.shared.isZohoInitialized()
             if !isZohoSDKInitialized {
                 throw .zohoSDKUninitialized
             }
@@ -180,20 +156,15 @@ final class ChatClient: Sendable {
             throw .sdkUninitialized
         } catch {
             
-            guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else { return }
+            guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else { return }
             
             exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.CHAT_SET_DEPARTMENT))
         }
     }
     
     func setPageTitle(title: String) throws (InitializationError) {
-        do throws (InitializationError) {
-            let isSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isInitialized() })
-            if !isSDKInitialized {
-                throw .sdkUninitialized
-            }
-            
-            let isZohoSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isZohoInitialized() })
+        do throws (InitializationError) {            
+            let isZohoSDKInitialized = CoreInitializer.shared.isZohoInitialized()
             if !isZohoSDKInitialized {
                 throw .zohoSDKUninitialized
             }
@@ -203,7 +174,7 @@ final class ChatClient: Sendable {
             throw .sdkUninitialized
         } catch {
             
-            guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else { return }
+            guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else { return }
             
             exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.CHAT_SET_DEPARTMENT))
         }
@@ -211,18 +182,13 @@ final class ChatClient: Sendable {
     
     func setQuestion() throws (InitializationError) {
         do throws (InitializationError) {
-            let isSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isInitialized() })
-            if !isSDKInitialized {
-                throw .sdkUninitialized
-            }
-            
-            let isZohoSDKInitialized = CoreInitializer.shared.withLock({ core in  return core.isZohoInitialized() })
+            let isZohoSDKInitialized = CoreInitializer.shared.isZohoInitialized()
             if !isZohoSDKInitialized {
                 throw .zohoSDKUninitialized
             }
             
             
-            let fileUtils = FileUtils.shared.withLock({ fileUtils in return fileUtils })
+            let fileUtils = FileUtils.shared
             
             guard let file = fileUtils.getFile(named: self.languageCode, extensioned: "json") else { return }
             
@@ -234,7 +200,7 @@ final class ChatClient: Sendable {
                 ZohoSalesIQ.Visitor.setQuestion(questions.ZOHO_QUESTION)
             } catch {
                 
-                guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else {
+                guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else {
                     return
                 }
                 exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.DEPARTMENT_GET_ALL))
@@ -245,7 +211,7 @@ final class ChatClient: Sendable {
             throw .sdkUninitialized
         } catch {
             
-            guard let exceptionHandlingCallback = CoreInitializer.shared.withLock({ core in  return core.getExceptionHandlingCallback() }) else { return }
+            guard let exceptionHandlingCallback = CoreInitializer.shared.getExceptionHandlingCallback() else { return }
             
             exceptionHandlingCallback.onException(error: ExceptionEvent(exception: error.localizedDescription, exceptionLocation: ExceptionLocation.CHAT_SET_DEPARTMENT))
         }

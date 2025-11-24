@@ -1,8 +1,8 @@
 import Synchronization
 import Foundation
 
-final class FileUtils {
-    static let shared = Mutex<FileUtils>(FileUtils())
+final class FileUtils: Sendable {
+    static let shared = FileUtils()
     
     func getFile(named: String, extensioned: String) -> String? {
         guard let url = Bundle.module.url(forResource: named, withExtension: extensioned) else { return nil }
