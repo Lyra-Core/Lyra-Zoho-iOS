@@ -13,31 +13,29 @@ final class FileUtils: Sendable {
     
     func getDepartmentFile() async -> String? {
         
-        if let cachedData = try? dataCache.getObject(forKey: "departments") as? Data,
-           let cachedString = String(data: cachedData, encoding: .utf8)
-        {
-            return cachedString
-        }
-        
-        let url: String
-        if CoreInitializer.shared.getEnvironment() == .PRODUCTION {
-            url = "https://icascontentstorage.blob.core.windows.net/assets/Chat/zoho-departments-Production.json"
-        } else {
-            url = "https://icascontentstorage.blob.core.windows.net/assets/Chat/zoho-departments-Staging.json"
-        }
-        
-        guard let urlParsed = URL(string: url) else { return nil }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: urlParsed)
+        let cachedData: Data? = dataCache.getObject(forKey: "departments") as Data?
+        guard let unwrappedCachedData = cachedData else {
+            let url: String
+            if CoreInitializer.shared.getEnvironment() == .PRODUCTION {
+                url = "https://icascontentstorage.blob.core.windows.net/assets/Chat/zoho-departments-Production.json"
+            } else {
+                url = "https://icascontentstorage.blob.core.windows.net/assets/Chat/zoho-departments-Staging.json"
+            }
+                    
+            guard let urlParsed = URL(string: url) else { return nil }
             
-            dataCache.setObject(data, forKey: "departments")
-            
-            return String(data: data, encoding: .utf8)
-        } catch {
-            print("Network error in getDepartmentFile(): \(error)")
-            return nil
+            do {
+                let (data, _) = try await URLSession.shared.data(from: urlParsed)
+                dataCache.setObject(data, forKey: "departments")
+                return String(data: data, encoding: .utf8)
+            } catch {
+                print("Network error in getDepartmentFile(): \(error)")
+                return nil
+            }
         }
+        let cachedString = String(data: unwrappedCachedData, encoding: .utf8)
+        return cachedString
+        
     }
     
     func clearDepartmentCache() {
